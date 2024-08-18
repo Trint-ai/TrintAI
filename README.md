@@ -12,7 +12,7 @@ Using TrintAI you can power your apps with cutting-edge speech recognition.
 
 More to come...
 
-📣📣📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested! 📣📣📣
+📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested! 📣
 
 ## Enterprise transcription services
 We believe in open source and we believe we can take TrintAI to the next level. Here we provide a list of the most popular speech-to-text paid services in the market that can be use for feature comparison.
