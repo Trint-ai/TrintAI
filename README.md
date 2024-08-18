@@ -1,6 +1,6 @@
 # TrintAI
 
-## **Build voice-based LLM apps in minutes**
+## **Get meaningful insights from audio files in minutes**
 TrintAI is a powerful open source tool for converting speech into text. In addition to its transcription capabilities, it can generate summaries of the audio and detect sentiments and emotions.
 Using TrintAI you can power your apps with cutting-edge speech recognition.
 
@@ -15,7 +15,7 @@ More to come...
 📣📣📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested! 📣📣📣
 
 ## Enterprise transcription services
-We believe in open source and we believe we can take TrintAI to the next level. Here we provide a list of the most popular speech-to-text paid services that we can use to perform benchmarks.
+We believe in open source and we believe we can take TrintAI to the next level. Here we provide a list of the most popular speech-to-text paid services in the market that can be use for feature comparison.
 - [AssemblyAI](https://www.assemblyai.com/)
 - [Deepgram](https://deepgram.com/)
 - [Gladia](https://gladia.io)
