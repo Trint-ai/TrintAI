@@ -1,6 +1,6 @@
 # TrintAI
 
-## **Get meaningful insights from audio files in minutes**
+## **Gain insights from audio files in minutes**
 TrintAI is a powerful open source tool for converting speech into text. In addition to its transcription capabilities, it can generate summaries of the audio and detect sentiments and emotions.
 Using TrintAI you can power your apps with cutting-edge speech recognition.
 
