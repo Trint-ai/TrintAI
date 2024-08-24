@@ -16,9 +16,10 @@ class summarization:
     def generate_summary(self):
         """TODO"""
         print("Summary:")
-        text = ""
+        final_text = ""
         for segment in self.transcript_data:
-            text += segment["text"] + ". "
+            text = segment['text']
+            final_text += text + ". "
 
         response = self.openai_client.chat.completions.create(
             model=settings.SUMMARIZATION_MODEL,
@@ -29,7 +30,7 @@ class summarization:
                 },
                 {
                     "role": "user",
-                    "content": text
+                    "content": final_text
                 }
             ],
             temperature=settings.SUMMARIZATION_MODEL_TEMP,

@@ -1,6 +1,8 @@
 """Main application."""
 
 import os
+import sys
+import urllib.request
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, Response
@@ -20,8 +22,18 @@ def load_environment_variables():
     dotenv_path = os.path.join(project_root, settings.ENVIRONMENT_VARIABLES_FILE)
     load_dotenv(dotenv_path=dotenv_path)
 
+
+def download_progress(block_num, block_size, total_size):
+    # Calculate the progress percentage
+    downloaded = block_num * block_size
+    progress = (downloaded / total_size) * 100
+
+    # Print the progress in the same line
+    sys.stdout.write(f"\rDownloading whisper model: {progress:.2f}%")
+    sys.stdout.flush()
+
 def load_hf_models():
-    """Pull HF models at start"""
+    """Pull models at start"""
     # TODO: This should be improved
 
     # Pull emotion model
@@ -34,12 +46,11 @@ def load_hf_models():
     hf_hub_download(repo_id=settings.EMOTIONS_MODEL, filename="special_tokens_map.json")
 
     # Pull whisper model
-    hf_hub_download(repo_id=settings.WHISPER_MODEL, filename="config.json")
-    hf_hub_download(repo_id=settings.WHISPER_MODEL, filename="vocabulary.json")
-    hf_hub_download(repo_id=settings.WHISPER_MODEL, filename="preprocessor_config.json")
-    hf_hub_download(repo_id=settings.WHISPER_MODEL, filename="tokenizer.json")
-    hf_hub_download(repo_id=settings.WHISPER_MODEL, filename="preprocessor_config.json")
-    hf_hub_download(repo_id=settings.WHISPER_MODEL, filename="model.bin")
+    model_file = f"/tmp/{settings.WHISPER_MODEL}.llamafile"
+    if not os.path.exists(model_file):
+        urllib.request.urlretrieve(f"https://huggingface.co/Mozilla/whisperfile/resolve/main/{settings.WHISPER_MODEL}.llamafile", model_file, reporthook=download_progress)
+        os.chmod(f"/tmp/{settings.WHISPER_MODEL}.llamafile", 0o755)
+
 
 class Api(BaseModel):
     file: str
@@ -62,4 +73,4 @@ async def api(item: Api):
 if __name__ == '__main__':
     load_environment_variables()
     load_hf_models()
-    uvicorn.run('main:app', host='0.0.0.0', port=8000, reload=False)
+    uvicorn.run('main:app', host='0.0.0.0', port=8000, reload=True)

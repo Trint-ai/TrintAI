@@ -32,7 +32,7 @@ class core:
 
         # Speech to text
         transcript = whisper(file_name)
-        transcript_data, detected_language, detected_language_prob = transcript.transcript_audio()
+        transcript_data, detected_language = transcript.transcript_audio()
 
         if transcript_data is None:
             print("Error while transcript audio")

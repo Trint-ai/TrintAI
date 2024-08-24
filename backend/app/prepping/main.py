@@ -1,6 +1,7 @@
 """Audio preprocessing techniques"""
 
 import os
+import subprocess
 import mutagen
 
 from core.config import settings
@@ -28,6 +29,10 @@ class audioPreprocessing:
             return None
 
         result = self.remove_silence()
+        if result is None:
+            return None
+
+        result = self.convert_to_wav()
         if result is None:
             return None
 
@@ -123,4 +128,18 @@ class audioPreprocessing:
         merged_audio.export(self.file_name, format="mp3")
 
         print(f"Silence Removal Complete")
+        return "OK"
+
+    def convert_to_wav(self):
+        file_name = os.path.splitext(self.file_name)[0][0:]
+        file_name = f"{file_name}.wav"
+        subprocess.run(["ffmpeg",
+                        "-hide_banner",
+                        "-loglevel", "error",
+                        "-i", self.file_name,
+                        "-acodec", "pcm_s16le",
+                        "-ar", "16000",
+                        file_name])
+        os.remove(self.file_name)
+        self.file_name = file_name
         return "OK"

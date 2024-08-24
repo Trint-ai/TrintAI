@@ -1,6 +1,8 @@
 """TODO"""
+
 import os
-from faster_whisper import WhisperModel
+import subprocess
+import json
 from core.config import settings
 
 
@@ -12,37 +14,36 @@ class whisper:
         self.file_name = file_name
         self.transcript_data = []
         self.detected_language = None
-        self.detected_language_prob = None
 
     def transcript_audio(self):
         """TODO"""
         try:
-            model_size = settings.WHISPER_MODEL_SIZE
+            command = f"/tmp/{settings.WHISPER_MODEL}.llamafile -f {self.file_name} -di -oj -l auto"
+            subprocess.run(command, shell=True, capture_output=True)
 
-            # TODO run on GPU
+            # Check if transcription was generated
+            print(f"{self.file_name}.json")
+            if os.path.exists(f"{self.file_name}.json"):
+                print("transcription file was generated")
+                with open(f"{self.file_name}.json", 'r') as file:
+                    data = json.load(file)
 
-            # run on CPU
-            model = WhisperModel(settings.WHISPER_MODEL_SIZE, device="cpu", compute_type="int8", local_files_only=True)
-            segments, info = model.transcribe(self.file_name, beam_size=settings.WHISPER_BEAM_SIZE)
-            self.detected_language = info.language
-            self.detected_language_prob = info.language_probability
-            print("Detected language '%s' with probability %f" % (self.detected_language, self.detected_language_prob))
+                    self.detected_language = data['result']['language']
+                    transcription = data['transcription']
 
-            segments = list(segments)  # The transcription will actually run here.
-            print("Transcript:")
-            for segment in segments:
-                print("[%.2fs -> %.2fs] %s" % (segment.start, segment.end, segment.text))
-                self.transcript_data.append(
-                    {
-                        "start": segment.start,
-                        "end": segment.end,
-                        "text": segment.text,
-                    }
-                )
+                    # Remove odd prefixes from string
+                    for i in range(len(transcription)):
+                        data = transcription[i]
+                        print(f"[{data['timestamps']['from']}] --> [{data['timestamps']['to']}]  (speaker {data['speaker']}) {data['text']}")
+                        self.transcript_data.append(data)
 
-            return self.transcript_data, self.detected_language, self.detected_language_prob
+            else:
+                print("Error generating transcript")
+                return None, None
+
+            return self.transcript_data, self.detected_language
 
         except Exception as e:
             print("Error generating transcript")
             print(e)
-            return None, None, None
+            return None, None
