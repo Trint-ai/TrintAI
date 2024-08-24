@@ -9,7 +9,7 @@ Using TrintAI you can power your apps with cutting-edge speech recognition.
 - **Summarization**: Provides concise summaries of long audio files or transcripts. This feature extracts the most important information and key points from the text, allowing you to quickly understand the main takeaways from meetings, calls, or any extended audio content.
 - **Sentiment Analysis**: Detects emotions within the transcribed text.
 - **Language Identification**: Detects the language spoken in the audio file and can transcribe in multiple languages.
-
+- **Diarization**: Identify and distinguish between different speakers within an audio recording.
 More to come...
 
 📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested! 📣
@@ -31,7 +31,9 @@ We believe in open source and we believe we can take TrintAI to the next level. 
 - [Python >=3.11](https://www.python.org/)
 - [ffmpeg](https://www.ffmpeg.org/)
 - [pyAudioAnalysis](https://github.com/tyiannak/pyAudioAnalysis)
-- [whisper](https://github.com/SYSTRAN/faster-whisper)
+- [whisper.cpp](https://github.com/ggerganov/whisper.cpp)
+- [llamafile](https://github.com/Mozilla-Ocho/llamafile)
+- [Mozilla/whisperfile](https://huggingface.co/Mozilla/whisperfile)
 - [Mutagen](https://github.com/quodlibet/mutagen)
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [openai](https://platform.openai.com/docs/libraries/python-library) (📣 only use for the **summarization** feature)
@@ -84,10 +86,21 @@ curl --header "Content-Type: application/json" \
 ```
 Where `transcript` structure is:
 ```
-{
-    'start': str,
-    'end': str,
-    'text': str
+{   
+    'timestamps':
+        {
+            'from': str(timestamp)
+            'to': str(timestamp)
+        },
+    'offsets':
+        {
+            'from': int
+            'to': int
+        }
+     'text': str,
+     'speaker': str,
+     'emotion': str,
+     'emotion_score': int
 }
 ```
 
@@ -95,50 +108,232 @@ Example:
 ```
 {
     "summary": {
-        "summary": "Mario Burns called ILTECA Telecom to inquire about her data service, which she believed should be restored by now. Sam, the representative, asked for her name to assist her further."
+        "summary": "Joanne Burns called ILTECA Telecom for assistance regarding her data service, which she believed should have been restored by now. Sam, the representative, asked for her name to check the status of her data."
     },
     "transcript": [
         {
-            "start": 0.0,
-            "end": 6.0,
-            "text": " Thank you for calling ILTECA Telecom. My name is Sam. How may I assist you today?",
-            "emotion": "neutral",
-            "emotion_score": 0.7938371896743774
-        },
-        {
-            "start": 6.0,
-            "end": 21.0,
-            "text": " Hi, my name is Mario and I have your services that I said I was out of data in May, but I think my data should be back on by now. Can you check? It doesn't seem like it.",
-            "emotion": "neutral",
-            "emotion_score": 0.5356881618499756
-        },
-        {
-            "start": 21.0,
-            "end": 28.0,
-            "text": " Alright, okay, great. Now, thank you so much.",
+            "timestamps": {
+                "from": "00:00:00,000",
+                "to": "00:00:03,120"
+            },
+            "offsets": {
+                "from": 0,
+                "to": 3120
+            },
+            "text": "Thank you for calling ILTECA Telecom.",
+            "speaker": "1",
             "emotion": "joy",
-            "emotion_score": 0.7313963174819946
+            "emotion_score": 0.5524019002914429
         },
         {
-            "start": 28.0,
-            "end": 39.0,
-            "text": " Alright, now, let me see. Can you please provide me with your first and last name?",
+            "timestamps": {
+                "from": "00:00:03,120",
+                "to": "00:00:04,080"
+            },
+            "offsets": {
+                "from": 3120,
+                "to": 4080
+            },
+            "text": "My name is Sam.",
+            "speaker": "1",
             "emotion": "neutral",
-            "emotion_score": 0.7319390177726746
+            "emotion_score": 0.6922041177749634
         },
         {
-            "start": 39.0,
-            "end": 42.0,
-            "text": " Mario Burns.",
+            "timestamps": {
+                "from": "00:00:04,080",
+                "to": "00:00:05,260"
+            },
+            "offsets": {
+                "from": 4080,
+                "to": 5260
+            },
+            "text": "How may I assist you today?",
+            "speaker": "1",
             "emotion": "neutral",
-            "emotion_score": 0.8114751577377319
+            "emotion_score": 0.43952763080596924
         },
         {
-            "start": 42.0,
-            "end": 45.0,
-            "text": " Alright, thank you.",
+            "timestamps": {
+                "from": "00:00:05,260",
+                "to": "00:00:08,780"
+            },
+            "offsets": {
+                "from": 5260,
+                "to": 8780
+            },
+            "text": "Hi. My name is Joanne.",
+            "speaker": "0",
             "emotion": "neutral",
-            "emotion_score": 0.5262356996536255
+            "emotion_score": 0.8426525592803955
+        },
+        {
+            "timestamps": {
+                "from": "00:00:08,780",
+                "to": "00:00:14,840"
+            },
+            "offsets": {
+                "from": 8780,
+                "to": 14840
+            },
+            "text": "And I have your services that -- I said I was out of data in May.",
+            "speaker": "0",
+            "emotion": "neutral",
+            "emotion_score": 0.5988990068435669
+        },
+        {
+            "timestamps": {
+                "from": "00:00:14,840",
+                "to": "00:00:18,320"
+            },
+            "offsets": {
+                "from": 14840,
+                "to": 18320
+            },
+            "text": "But I think my data should be back on by now.",
+            "speaker": "0",
+            "emotion": "neutral",
+            "emotion_score": 0.9454419016838074
+        },
+        {
+            "timestamps": {
+                "from": "00:00:18,320",
+                "to": "00:00:19,220"
+            },
+            "offsets": {
+                "from": 18320,
+                "to": 19220
+            },
+            "text": "Can you check?",
+            "speaker": "0",
+            "emotion": "neutral",
+            "emotion_score": 0.7124136090278625
+        },
+        {
+            "timestamps": {
+                "from": "00:00:19,220",
+                "to": "00:00:20,540"
+            },
+            "offsets": {
+                "from": 19220,
+                "to": 20540
+            },
+            "text": "It doesn't seem like it.",
+            "speaker": "0",
+            "emotion": "surprise",
+            "emotion_score": 0.5951151847839355
+        },
+        {
+            "timestamps": {
+                "from": "00:00:20,540",
+                "to": "00:00:25,320"
+            },
+            "offsets": {
+                "from": 20540,
+                "to": 25320
+            },
+            "text": "All right.",
+            "speaker": "1",
+            "emotion": "neutral",
+            "emotion_score": 0.6785580515861511
+        },
+        {
+            "timestamps": {
+                "from": "00:00:25,320",
+                "to": "00:00:25,940"
+            },
+            "offsets": {
+                "from": 25320,
+                "to": 25940
+            },
+            "text": "Okay. Great.",
+            "speaker": "1",
+            "emotion": "joy",
+            "emotion_score": 0.9347952008247375
+        },
+        {
+            "timestamps": {
+                "from": "00:00:25,940",
+                "to": "00:00:27,900"
+            },
+            "offsets": {
+                "from": 25940,
+                "to": 27900
+            },
+            "text": "Now, thank you so much.",
+            "speaker": "1",
+            "emotion": "joy",
+            "emotion_score": 0.7642761468887329
+        },
+        {
+            "timestamps": {
+                "from": "00:00:28,960",
+                "to": "00:00:32,720"
+            },
+            "offsets": {
+                "from": 28960,
+                "to": 32720
+            },
+            "text": "All right.",
+            "speaker": "0",
+            "emotion": "neutral",
+            "emotion_score": 0.6785580515861511
+        },
+        {
+            "timestamps": {
+                "from": "00:00:32,720",
+                "to": "00:00:34,680"
+            },
+            "offsets": {
+                "from": 32720,
+                "to": 34680
+            },
+            "text": "Now, let me see.",
+            "speaker": "1",
+            "emotion": "neutral",
+            "emotion_score": 0.44418302178382874
+        },
+        {
+            "timestamps": {
+                "from": "00:00:34,680",
+                "to": "00:00:38,980"
+            },
+            "offsets": {
+                "from": 34680,
+                "to": 38980
+            },
+            "text": "Can you please provide me with your first and last name?",
+            "speaker": "1",
+            "emotion": "neutral",
+            "emotion_score": 0.8994667530059814
+        },
+        {
+            "timestamps": {
+                "from": "00:00:38,980",
+                "to": "00:00:42,140"
+            },
+            "offsets": {
+                "from": 38980,
+                "to": 42140
+            },
+            "text": "Joanne Burns.",
+            "speaker": "0",
+            "emotion": "neutral",
+            "emotion_score": 0.7366818785667419
+        },
+        {
+            "timestamps": {
+                "from": "00:00:42,140",
+                "to": "00:00:44,580"
+            },
+            "offsets": {
+                "from": 42140,
+                "to": 44580
+            },
+            "text": "All right.",
+            "speaker": "1",
+            "emotion": "neutral",
+            "emotion_score": 0.6785580515861511
         }
     ]
 }
