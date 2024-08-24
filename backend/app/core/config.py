@@ -29,6 +29,6 @@ class Settings(BaseSettings):
     SUMMARIZATION_MODEL: str = "gpt-4o-mini"
     SUMMARIZATION_MODEL_TEMP: float = 0.0
 
-    WHISPER_MODEL: str = "whisper-large-v2"
+    WHISPER_MODEL: str = "whisper-large-v3"
 
 settings = Settings()
