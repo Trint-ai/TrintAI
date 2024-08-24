@@ -10,6 +10,8 @@ Using TrintAI you can power your apps with cutting-edge speech recognition.
 - **Sentiment Analysis**: Detects emotions within the transcribed text.
 - **Language Identification**: Detects the language spoken in the audio file and can transcribe in multiple languages.
 - **Diarization**: Identify and distinguish between different speakers within an audio recording.
+
+
 More to come...
 
 📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested! 📣
