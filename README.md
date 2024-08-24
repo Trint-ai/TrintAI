@@ -16,6 +16,14 @@ More to come...
 
 📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested! 📣
 
+
+## ⭐️ Give Us a Star! ⭐️
+
+If you find this project useful or interesting, please consider giving it a star on GitHub! 🌟 Your support helps us continue to improve and maintain the project.
+
+Just click the star button at the top of the repository page. Your feedback and support mean a lot to us. Thank you! 😊
+
+
 ## Enterprise transcription services
 We believe in open source and we believe we can take TrintAI to the next level. Here we provide a list of the most popular speech-to-text paid services in the market that can be use for feature comparison.
 - [AssemblyAI](https://www.assemblyai.com/)
