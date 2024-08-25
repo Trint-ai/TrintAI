@@ -1,6 +1,6 @@
 boto3==1.34.136
 eyed3==0.9.7
-fastapi==0.111.0
+fastapi==0.112.2
 ffmpeg-python==0.2.0
 hmmlearn==0.3.2
 imblearn==0.0
