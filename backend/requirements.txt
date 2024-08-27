@@ -11,7 +11,7 @@ pydantic-settings==2.4.0
 plotly==5.22.0
 pyAudioAnalysis==0.3.14
 pydub==0.25.1
-scipy==1.10.1
+scipy==1.14.1
 tensorflow==2.17.0
 tf-keras==2.17.0
 transformers==4.43.3
