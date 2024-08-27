@@ -14,7 +14,7 @@ Using TrintAI you can power your apps with cutting-edge speech recognition.
 
 More to come...
 
-📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested! 📣
+📣 We're currently seeking community maintainers, so don't hesitate to get in touch if you're interested, check the  [contribution guidelines](CONTRIBUTING.md) 📣
 
 
 ## ⭐️ Give Us a Star! ⭐️
