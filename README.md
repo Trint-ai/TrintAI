@@ -78,6 +78,17 @@ cd app
 python main.py
 ```
 
+### [Optionally] Run with Docker
+
+1. Build the docker image:
+```
+docker build -t trintai .
+```
+2. Run trintAi with Docker:
+```
+docker run -p 8000:8000 -t trintai
+```
+
 ### Usage
 1. Send a request to TrintAI to process an audio file:
 ```
