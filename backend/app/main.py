@@ -73,4 +73,4 @@ async def api(item: Api):
 if __name__ == '__main__':
     load_environment_variables()
     load_hf_models()
-    uvicorn.run('main:app', host='0.0.0.0', port=8000, reload=True)
+    uvicorn.run('main:app', host='0.0.0.0', port=8000, reload=False)
