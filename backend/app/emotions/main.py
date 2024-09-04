@@ -13,9 +13,9 @@ class emotions:
         self.detected_language = detected_language
         self.emotions = []
         self.classifier = pipeline("text-classification", model=settings.EMOTIONS_MODEL,
-                                   top_k=1, max_length=settings.EMOTIONS_EMBEDDINGS_MAX_LENGTH, truncation=True)
+                                   top_k=1, max_length=settings.EMOTIONS_EMBEDDINGS_MAX_LENGTH, truncation=True, device_map="auto")
 
-    def get_emotions(self):
+    async def get_emotions(self):
         if self.detected_language == "en":
             print("Emotions:")
             for segment in self.transcript_data:

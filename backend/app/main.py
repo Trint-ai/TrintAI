@@ -2,6 +2,7 @@
 
 import os
 import sys
+import asyncio
 import urllib.request
 import uvicorn
 from dotenv import load_dotenv
@@ -63,7 +64,10 @@ app = FastAPI(title="TrintAI API", version="0.0.1")
 async def api(item: Api):
     body = item.model_dump()
     trintai = core(body['file'])
-    result = trintai.start()
+
+    result = await asyncio.gather(
+        asyncio.create_task(trintai.start())
+    )
 
     if result is None:
         return Response(status_code=500)

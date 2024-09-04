@@ -13,7 +13,7 @@ class summarization:
         self.summary = None
         self.openai_client = OpenAI()
 
-    def generate_summary(self):
+    async def generate_summary(self):
         """TODO"""
         print("Summary:")
         final_text = ""
