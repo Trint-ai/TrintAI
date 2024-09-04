@@ -1,5 +1,6 @@
 """TrintAi core application """
 
+import asyncio
 from utils.main import utils
 from prepping.main import audioPreprocessing
 from whisper.main import whisper
@@ -14,7 +15,7 @@ class core:
         """Initialize for core application"""
         self.file = file
 
-    def start(self):
+    async def start(self):
         """Start the application"""
         print("Starting TrintAI")
 
@@ -34,17 +35,20 @@ class core:
         transcript = whisper(file_name)
         transcript_data, detected_language = transcript.transcript_audio()
 
+        # Detect emotions
+        emotion = emotions(transcript_data, detected_language)
+
+        # Generate summary
+        summary = summarization(transcript_data)
+
         if transcript_data is None:
             print("Error while transcript audio")
             return None
 
-        # Detect emotions
-        emotion = emotions(transcript_data, detected_language)
-        emotions_data = emotion.get_emotions()
-
-        # Generate summary
-        summary = summarization(transcript_data)
-        summary_data = summary.generate_summary()
+        emotions_data, summary_data = await asyncio.gather(
+            asyncio.create_task(emotion.get_emotions()),
+            asyncio.create_task(summary.generate_summary()),
+        )
 
         # Compile data to return
         final_result = util.compile_data(summary, summary_data, emotions_data, transcript_data)
