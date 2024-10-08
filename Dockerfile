@@ -1,4 +1,4 @@
-FROM python:3.11.9
+FROM python:3.13.0
 
 RUN apt-get -y update
 RUN apt-get install -y build-essential python3.11-dev libhdf5-dev ffmpeg
