@@ -7,7 +7,7 @@ hmmlearn==0.3.2
 imblearn==0.0
 matplotlib==3.9.1
 mutagen==1.47.0
-openai==1.42.0
+openai==1.52.2
 pydantic==2.8.2
 pydantic-settings==2.4.0
 plotly==5.23.0
