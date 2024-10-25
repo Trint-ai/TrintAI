@@ -14,7 +14,7 @@ plotly==5.23.0
 pyAudioAnalysis==0.3.14
 pydub==0.25.1
 scipy==1.14.1
-tensorflow==2.17.0
+tensorflow==2.18.0
 tf-keras==2.17.0
 transformers==4.46.0
 uvicorn==0.30.6
