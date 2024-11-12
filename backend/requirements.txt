@@ -1,7 +1,7 @@
 accelerate==0.34.2
 asyncio==3.4.3
 eyed3==0.9.7
-fastapi==0.115.3
+fastapi==0.115.5
 ffmpeg-python==0.2.0
 hmmlearn==0.3.2
 imblearn==0.0
