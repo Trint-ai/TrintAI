@@ -3,7 +3,7 @@ asyncio==3.4.3
 eyed3==0.9.7
 fastapi==0.115.3
 ffmpeg-python==0.2.0
-hmmlearn==0.3.2
+hmmlearn==0.3.3
 imblearn==0.0
 matplotlib==3.9.3
 mutagen==1.47.0
