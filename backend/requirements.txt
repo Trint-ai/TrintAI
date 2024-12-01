@@ -8,7 +8,7 @@ imblearn==0.0
 matplotlib==3.9.3
 mutagen==1.47.0
 openai==1.55.3
-pydantic==2.9.2
+pydantic==2.10.2
 pydantic-settings==2.6.1
 plotly==5.24.1
 pyAudioAnalysis==0.3.14
