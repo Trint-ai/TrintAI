@@ -16,5 +16,5 @@ pydub==0.25.1
 scipy==1.14.1
 tensorflow==2.18.0
 tf-keras==2.18.0
-transformers==4.46.3
+transformers==4.47.1
 uvicorn==0.32.1
