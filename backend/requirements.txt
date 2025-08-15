@@ -5,7 +5,7 @@ fastapi==0.115.8
 ffmpeg-python==0.2.0
 hmmlearn==0.3.3
 imblearn==0.0
-matplotlib==3.10.0
+matplotlib==3.10.5
 mutagen==1.47.0
 openai==1.99.9
 pydantic==2.10.4
