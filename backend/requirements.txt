@@ -9,7 +9,7 @@ matplotlib==3.10.5
 mutagen==1.47.0
 openai==1.99.9
 pydantic==2.10.4
-pydantic-settings==2.8.0
+pydantic-settings==2.10.1
 plotly==6.0.0
 pyAudioAnalysis==0.3.14
 pydub==0.25.1
