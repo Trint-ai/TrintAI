@@ -1,6 +1,6 @@
 accelerate==1.10.0
 asyncio==3.4.3
-eyed3==0.9.7
+eyed3==0.9.8
 fastapi==0.116.1
 ffmpeg-python==0.2.0
 hmmlearn==0.3.3
